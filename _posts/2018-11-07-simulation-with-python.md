@@ -10,6 +10,6 @@ comments: true
 ## 用 Python 进行**自动控制原理**系统仿真
 
 <div align= "center">
-  <img src="assets/img/ctl.gif">
+  <img src="https://ustczwq.github.io/assets/img/ctl.gif">
 	<figcaption> result </figcaption>
 </div>
