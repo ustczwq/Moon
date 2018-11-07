@@ -17,7 +17,7 @@ comments: true
 - 绘制根轨迹，绘制伯德图等。
 - 绘制以上图像，观察参数影响。
 
-> 教材：《 [现代控制系统（十三版）](https://www.phei.com.cn/module/goods/wssd_content.jsp?bookid=52408)》
+> 教材：《 [现代控制系统（十三版）](https://www.amazon.cn/dp/B07FDKXPZ3)》
 
 虽然 Matlab 功能强大，快捷方便，但是对于我们当下的需求而言，它至少有以下不便：
 
@@ -202,7 +202,7 @@ plt.title('CDP4.1')
 </div>
 
 ### 系统级联
-除了求系统响应，接下来用的很多的就是系统的反馈求解，当然我们可以手动先求解出系统级联之后的传递函数，然后再进行同样的求解，但是这样一般比较麻烦，其实库里面有 [system-interconnections](https://python-control.readthedocs.io/en/latest/control.html#system-interconnections) 相关的函数可以调用，最常用的就是 [feedback](https://python-control.readthedocs.io/en/latest/generated/control.feedback.html#control.feedback)，同样习题 CP4.1 的反馈为例，值得注意的是，虽然是单位负反馈，但是反馈函数的类型的转化一下，具体要求见官方文档，这里给出一个例子。
+除了求系统响应，接下来用的很多的就是系统的反馈求解，当然我们可以手动先求解出系统级联之后的传递函数，然后再进行同样的求解，但是这样一般比较麻烦，其实库里面有 [system-interconnections](https://python-control.readthedocs.io/en/latest/control.html#system-interconnections) 相关的函数可以调用，最常用的就是 [feedback](https://python-control.readthedocs.io/en/latest/generated/control.feedback.html#control.feedback)，同样习题 CDP4.1 的反馈为例，值得注意的是，虽然是单位负反馈，但是反馈函数的类型的转化一下，具体要求见官方文档，这里给出一个例子。
 ```python
 k = 10
 t, y = ctl.step_response(ctl.feedback(k*sys, ctl.tf([1], [1])))
@@ -211,9 +211,9 @@ t, y = ctl.step_response(ctl.feedback(k*sys, ctl.tf([1], [1])))
 
 ## 五、交互部件
 
-既然都用上 Python 和 Jupyter Notebook 了，怎么会轻易就满足了，我接着在服务器的 Jupyter 上扩展了 [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/examples/Using%20Interact.html)，可以调用函数进行一些小交互。
+既然都用上 Python 和 Jupyter Notebook 了，怎么会轻易就满足了，我之前在服务器的 Jupyter 上扩展了 [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/examples/Using%20Interact.html)，可以调用函数进行一些小交互。
 
-起初配置 ipywidgets 只是看着有意思，但是突然想到可以跟系统与控制仿真结合起来，就试了一下：
+起初配置 ipywidgets 只是看着有意思，但是突然想到可以跟系统与控制仿真结合起来，利用交互小部件获取参数，实现动态调参，试了一下：
 ```python
 from IPython.display import display
 import ipywidgets as widgets
