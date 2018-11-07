@@ -28,7 +28,9 @@ comments: true
 因此，我决定试着用 Python 来实现以上需求，经过一番调研之后发现，不仅实现起来不难，并且配合 Jupyter Notebook（扩展安装 Jupyter Lab）用起来简直不能更爽。这里简单讲讲 Python 实现的系统控制仿真。
 
 > 课程上大多数人还是用 Matlab，但我希望更多人加入我们 PY 邪教。
+
 ### 环境 
+
 - Python 3
   - [control](https://python-control.readthedocs.io/en/latest/index.html)
   - [SymPy](https://docs.sympy.org/latest/index.html)
@@ -141,10 +143,14 @@ print(diff(f, "x3"))
 
 ### 构建系统
 一般我们都是在 LTI system 的基础上，基于传递函数，构建系统，一般主要来求阶跃响应、单位冲击响应等。构建系统方式有很多，其中最常见的就是基于有理多项式的传递函数的分子和分母构建系统，还是以自控习题 CDP4.1 为例，传递函数为：
+
+
 $$
 T_s = \frac{K_m}{(L_ms + R_m)(J_ts + b_m) + K_bK_m}
 $$
-利用 [tf](https://python-control.readthedocs.io/en/latest/generated/control.tf.html#control.tf) 构建系统，不过在此之前可以先对传递函数进行化简：
+
+
+利用 [control.tf](https://python-control.readthedocs.io/en/latest/generated/control.tf.html#control.tf) 构建系统，不过在此之前可以先对传递函数进行化简：
 ```python
 from sympy import Symbol, expand
 s = Symbol('s')
@@ -197,7 +203,7 @@ plt.title('CDP4.1')
 
 ### 系统级联
 除了求系统响应，接下来用的很多的就是系统的反馈求解，当然我们可以手动先求解出系统级联之后的传递函数，然后再进行同样的求解，但是这样一般比较麻烦，其实库里面有 [system-interconnections](https://python-control.readthedocs.io/en/latest/control.html#system-interconnections) 相关的函数可以调用，最常用的就是 [feedback](https://python-control.readthedocs.io/en/latest/generated/control.feedback.html#control.feedback)，同样习题 CP4.1 的反馈为例，值得注意的是，虽然是单位负反馈，但是反馈函数的类型的转化一下，具体要求见官方文档，这里给出一个例子。
-```Python
+```python
 k = 10
 t, y = ctl.step_response(ctl.feedback(k*sys, ctl.tf([1], [1])))
 ```
